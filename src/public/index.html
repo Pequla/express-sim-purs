@@ -27,7 +27,7 @@
     const token = params.get('token')
     if (token) {
       const dataDiv = document.getElementById('data')
-      fetch('http://192.168.40.203:5800/api/invoice/' + token)
+      fetch('/api/invoice/' + token)
         .then(rsp => rsp.json())
         .then(data => {
             document.getElementById('id').innerText = data.invoiceId
