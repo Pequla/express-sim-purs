@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PURS SIM - PSEP</title>
+  <style>
+    * {
+      font-family: monospace;
+      margin: 0px
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Praktikum Sistemi E-Poslovanja</h1>
+  <h3>Simulator Elektronskih Usluga Poreske Uprave</h3>
+  <h3>Univerzitet Singidunum - Tehnički Fakultet</h3>
+  <div id="data" hidden>
+    <h3>**************************************</h3>
+    <h1>Fiskalni račun #<span id="id"></span></h1>
+    <h2 id="customer"></h2>
+    <h3 id="address"></h3>
+    <h3>PIB: <span id="tax"></span></h3>
+    <p>Stavke racuna:</p>
+    <ul id="items"></ul>
+    <h3>Račun verifikovan u <span id="time"></span></h3>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search)
+    const token = params.get('token')
+    if (token) {
+      const dataDiv = document.getElementById('data')
+      fetch('/api/invoice/' + token)
+        .then(rsp => rsp.json())
+        .then(data => {
+            document.getElementById('id').innerText = data.invoiceId
+          document.getElementById('customer').innerText = data.customer
+          document.getElementById('address').innerText = data.address
+          document.getElementById('time').innerText = new Date(data.createdAt).toLocaleString('sr-RS')
+          document.getElementById('tax').innerText = data.taxId ?? '/'
+          const items = document.getElementById('items')
+          for (let i of data.items) {
+            const li = document.createElement('li')
+            li.innerText = `${i.name} x${i.amount} (Cena: ${i.price} RSD) Ukupno: ${i.price * i.amount} RSD`
+            items.appendChild(li)
+          }
+
+          dataDiv.hidden = false
+        })
+    }
+  </script>
+</body>
+
+</html>

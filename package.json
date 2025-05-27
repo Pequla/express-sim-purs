@@ -1,0 +1,26 @@
+{
+  "name": "express-sim-purs",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch ./src/index.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/morgan": "^1.9.9"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.1",
+    "typeorm": "^0.3.24"
+  }
+}
